@@ -31,6 +31,12 @@ public class PrescriptionDrug {
     @Column(name = "prescription_drug_id")
     public Long prescriptionDrugId;
 
+    @Column(name = "account_id")
+    public String accountId;
+
+    @Column(name = "medical_specialty")
+    public MedicalSpecialty medicalSpecialty;
+
     @Builder.Default
     @Column(name = "issue_date")
     public String issueDate=new SimpleDateFormat("dd-MM-yyyy").format(new Date());
