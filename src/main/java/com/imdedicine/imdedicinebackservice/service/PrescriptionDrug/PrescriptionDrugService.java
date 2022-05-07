@@ -1,6 +1,7 @@
 package com.imdedicine.imdedicinebackservice.service.PrescriptionDrug;
 
 import com.imdedicine.imdedicinebackservice.domain.PrescriptionDrug;
+import com.imdedicine.imdedicinebackservice.model.PrescriptionDrugResponse;
 import com.imdedicine.imdedicinebackservice.repository.PrescriptionDrugRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,10 +23,20 @@ public class PrescriptionDrugService {
         return objectResponse.map(PrescriptionDrug::getDosage);
         }
 
-    public Optional<PrescriptionDrug> getPrescriptionDrugByDrugName(String drugName) {
-        log.info("got id drugName" + drugName + " and turn to Repository with findByDrugName");
-        Optional<PrescriptionDrug> objectResponse = prescriptionDrugRepository.findByDrugName(drugName);
-        log.info("retrun optional value " + objectResponse);
-        return objectResponse;
+    public Optional<PrescriptionDrugResponse> getPrescriptionDrugByDrugName(String AccontId , String drugName) {
+        PrescriptionDrugResponse.PrescriptionDrugResponseBuilder prescriptionDrugResponse = PrescriptionDrugResponse.builder();
+        log.info("got id drugName " + drugName + " and turn to Repository with findByDrugName");
+        return prescriptionDrugRepository.findByAccountIdAndDrugName(AccontId, drugName)
+                .map(this::mapPrescriptionDrugToPrescriptionDrugResponse);
+    }
+
+        private PrescriptionDrugResponse mapPrescriptionDrugToPrescriptionDrugResponse(PrescriptionDrug prescriptionDrug) {
+        return PrescriptionDrugResponse.builder()
+                .accountId(prescriptionDrug.getAccountId())
+                .drugName(prescriptionDrug.getDrugName())
+                .dosage(prescriptionDrug.getDosage())
+                .medicalSpecialty(prescriptionDrug.getMedicalSpecialty().getValue())
+                .build();
+
     }
 }

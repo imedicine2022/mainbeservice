@@ -12,7 +12,7 @@ public interface PrescriptionDrugRepository extends CrudRepository<PrescriptionD
 
     Optional<PrescriptionDrug> findByPrescriptionDrugId(Long id);
 
-    Optional<PrescriptionDrug> findByDrugName(String durgName);
+    Optional<PrescriptionDrug> findByAccountIdAndDrugName(String AccountId ,String durgName);
 
 
 

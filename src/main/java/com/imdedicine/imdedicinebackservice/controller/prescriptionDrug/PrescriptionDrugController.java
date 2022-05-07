@@ -1,6 +1,7 @@
 package com.imdedicine.imdedicinebackservice.controller.prescriptionDrug;
 
 import com.imdedicine.imdedicinebackservice.domain.PrescriptionDrug;
+import com.imdedicine.imdedicinebackservice.model.PrescriptionDrugResponse;
 import com.imdedicine.imdedicinebackservice.service.PrescriptionDrug.PrescriptionDrugService;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +29,7 @@ import java.util.Locale;
 
             private final PrescriptionDrugService prescriptionDrugService;
 
-        @GetMapping("/getDosage")
+    @GetMapping("/getDosage")
         public ResponseEntity<String> getDosage(@RequestParam Long id) {
             return prescriptionDrugService.getDosageById(id)
                     .map(dose -> new ResponseEntity<>(dose, HttpStatus.OK))
@@ -37,8 +38,8 @@ import java.util.Locale;
 
 
     @GetMapping("/getPrescriptionDrug")
-    public ResponseEntity<PrescriptionDrug> getPrescriptionDrugByDrugName(@AuthenticationPrincipal User user, @RequestParam String name) {
-        return prescriptionDrugService.getPrescriptionDrugByDrugName(name)
+    public ResponseEntity<PrescriptionDrugResponse> getPrescriptionDrugByDrugName(@RequestParam String name) {
+        return prescriptionDrugService.getPrescriptionDrugByDrugName("11212",name)
                 .map(dose -> new ResponseEntity<>(dose, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
